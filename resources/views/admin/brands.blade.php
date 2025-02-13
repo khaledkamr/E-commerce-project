@@ -71,10 +71,12 @@
                                                     <i class="icon-edit-3"></i>
                                                 </div>
                                             </a>
-                                            <form action="#" method="POST">
-                                                <div class="item text-danger delete">
+                                            <form action="{{route("admin.brand.delete", $brand->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="item text-danger delete border-0" type="submit">
                                                     <i class="icon-trash-2"></i>
-                                                </div>
+                                                </button>
                                             </form>
                                         </div>
                                     </td>

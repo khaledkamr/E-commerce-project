@@ -36,4 +36,12 @@ class AdminController extends Controller
         return redirect(route("admin.brands"));
     }
 
+    public function delete_brand($id) {
+        $brand = Brand::findOrFail($id);
+        $brand_name = $brand->name;
+        Storage::delete($brand->image);
+        $brand->delete();
+        session()->flash("success", "$brand_name brand has been deleted successfully");
+        return redirect(route("admin.brands"));
+    }
 }
