@@ -83,7 +83,7 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="sub-menu-item">
-                                            <a href="add-brand.html" class="">
+                                            <a href="{{route('admin.brand.add')}}" class="">
                                                 <div class="text">New Brand</div>
                                             </a>
                                         </li>
@@ -393,7 +393,7 @@
                                             id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span class="header-user wg-user">
                                                 <span class="image">
-                                                    <img src="images/avatar/user-1.png" alt="">
+                                                    <img src="{{asset('images/avatar/user-1.png')}}" alt="">
                                                 </span>
                                                 <span class="flex flex-column">
                                                     <span class="body-title mb-2">Kristin Watson</span>
