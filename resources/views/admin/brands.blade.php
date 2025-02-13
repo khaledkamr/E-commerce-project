@@ -37,8 +37,8 @@
             </div>
             <div class="wg-table table-all-user">
                 <div class="table-responsive">
-                    @if (Session::has('status'))
-                        <p class="alert alert-success">{{session::get('status')}}</p>
+                    @if (Session::has('success'))
+                        <p class="alert alert-success">{{session::get('success')}}</p>
                     @endif
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -56,7 +56,7 @@
                                     <td>{{$brand->id}}</td>
                                     <td class="pname">
                                         <div class="image">
-                                            <img src="{{asset('uploads/brands')}}/{{$brand->name}}" alt="{{$brand->name}}" class="image">
+                                            <img src={{asset("Storage/$brand->image")}} alt="{{$brand->name}}">
                                         </div>
                                         <div class="name">
                                             <a href="#" class="body-title-2">{{$brand->name}}</a>
