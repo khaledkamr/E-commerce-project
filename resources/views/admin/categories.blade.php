@@ -65,7 +65,7 @@
                                     <td><a href="#" target="_blank"></a>0</td>
                                     <td class="col-action">
                                         <div class="list-icon-function">
-                                            <a href="">
+                                            <a href="{{route("admin.categories.edit", $cat->id)}}">
                                                 <div class="item edit ps-5">
                                                     <i class="icon-edit-3"></i>
                                                 </div>

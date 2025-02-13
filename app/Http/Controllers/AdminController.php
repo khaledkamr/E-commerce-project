@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -96,6 +93,27 @@ class AdminController extends Controller
         Storage::delete($category->image);
         $category->delete();
         session()->flash("success", "$category_name category has been deleted successfully");
+        return redirect(route("admin.categories"));
+    }
+
+    public function edit_category($id) {
+        $category = Category::findOrFail($id);
+        return view("admin.category-edit", compact("category"));
+    }
+
+    public function update_category($id, Request $request) {
+        $data = $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:categories,slug',
+            'image' => 'mimes:png,jpeg,jpg|image'
+        ]);
+        $category = Category::findOrFail($id);
+        if($request->has("image")) {
+            Storage::delete($category->image);
+            $date["image"] = Storage::putFile("categories", $request->image);
+        }
+        $category->update($data);
+        session()->flash("success", "Category updated successfully");
         return redirect(route("admin.categories"));
     }
 }
