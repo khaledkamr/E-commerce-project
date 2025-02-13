@@ -43,31 +43,33 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Products</th>
-                                <th>Action</th>
+                                <th class="col-id">#</th>
+                                <th class="col-name">Name</th>
+                                <th class="col-slug">Slug</th>
+                                <th class="col-products">Products</th>
+                                <th class="col-action">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($brands as $brand)
                                 <tr>
-                                    <td>{{$brand->id}}</td>
-                                    <td class="pname">
-                                        <div class="image">
-                                            <img src={{asset("Storage/$brand->image")}} alt="{{$brand->name}}">
-                                        </div>
-                                        <div class="name">
-                                            <a href="#" class="body-title-2">{{$brand->name}}</a>
+                                    <td class="col-id">{{$brand->id}}</td>
+                                    <td class="col-name">
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <div class="image">
+                                                <img src="{{asset("storage/$brand->image")}}" alt="{{$brand->name}}">
+                                            </div>
+                                            <div class="name ps-5">
+                                                <a href="#" class="body-title-2">{{$brand->name}}</a>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td>{{$brand->slug}}</td>
-                                    <td><a href="#" target="_blank">0</a></td>
-                                    <td>
+                                    <td class="col-slug">{{$brand->slug}}</td>
+                                    <td class="col-products"><a href="#" target="_blank">0</a></td>
+                                    <td class="col-action">
                                         <div class="list-icon-function">
-                                            <a href="#">
-                                                <div class="item edit">
+                                            <a href="{{route('admin.brand.edit', $brand->id)}}">
+                                                <div class="item edit ps-5">
                                                     <i class="icon-edit-3"></i>
                                                 </div>
                                             </a>
@@ -93,4 +95,61 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Ensure the table layout is fixed */
+    .wg-table table {
+        width: 100%;
+        table-layout: fixed; /* Prevents misalignment of table header and body */
+        border-collapse: collapse;
+    }
+
+    /* Define column widths */
+    .col-id {
+        width: 10%;
+        text-align: center;
+    }
+    .col-name {
+        width: 35%;
+        text-align: center;
+    }
+    .col-slug {
+        width: 30%;
+    }
+    .col-products {
+        width: 15%;
+        text-align: center;
+    }
+    .col-action {
+        width: 10%;
+        text-align: center;
+    }
+
+    /* Ensure headers and table data cells align */
+    .wg-table th, .wg-table td {
+        padding: 10px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Fix for Name column to align image and text properly */
+    .col-name .pname {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: start;
+    }
+
+    .col-name .pname img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+    }
+
+    .col-name .name {
+        flex-grow: 1;
+        text-align: left;
+    }
+</style>
+
 @endsection

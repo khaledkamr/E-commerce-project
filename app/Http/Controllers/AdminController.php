@@ -44,4 +44,25 @@ class AdminController extends Controller
         session()->flash("success", "$brand_name brand has been deleted successfully");
         return redirect(route("admin.brands"));
     }
+
+    public function edit_brand($id) {
+        $brand = Brand::findOrFail($id);
+        return view("admin.brand-edit")->with("brand", $brand);
+    }
+
+    public function update_brand($id, Request $request) {
+        $data = $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:brands,slug',
+            'image' => 'mimes:png,jpeg,jpg|image'
+        ]);
+        $brand = Brand::findOrFail($id);
+        if($request->has("image")) {
+            Storage::delete($brand->image);
+            $data["image"] = Storage::putFile("brands", $request->image);
+        }
+        $brand->update($data);
+        session()->flash("success", "brand updated successfully");
+        return redirect(route("admin.brands"));
+    }
 }
