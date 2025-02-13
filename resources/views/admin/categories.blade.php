@@ -1,9 +1,9 @@
-@extends("layouts.admin")
+@extends('layouts.admin')
 @section("content")
 <div class="main-content-inner">
     <div class="main-content-wrap">
         <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-            <h3>Brands</h3>
+            <h3>Categories</h3>
             <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
                 <li>
                     <a href="{{route('admin.index')}}">
@@ -14,7 +14,7 @@
                     <i class="icon-chevron-right"></i>
                 </li>
                 <li>
-                    <div class="text-tiny">Brands</div>
+                    <div class="text-tiny">Categories</div>
                 </li>
             </ul>
         </div>
@@ -32,12 +32,12 @@
                         </div>
                     </form>
                 </div>
-                <a class="tf-button style-1 w208" href="{{route('admin.brand.add')}}"><i
+                <a class="tf-button style-1 w208" href="{{route("admin.categories.add")}}"><i
                         class="icon-plus"></i>Add new</a>
             </div>
             <div class="wg-table table-all-user">
                 <div class="table-responsive">
-                    @if (Session::has('success'))
+                    @if(Session::has("success"))
                         <p class="alert alert-success">{{session::get('success')}}</p>
                     @endif
                     <table class="table table-striped table-bordered">
@@ -52,25 +52,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($brands as $brand)
+                            @foreach ($categories as $cat)
                                 <tr>
-                                    <td class="col-id">{{$brand->id}}</td>
-                                    <td class=col-logo>
+                                    <td class="col-id">{{$cat->id}}</td>
+                                    <td class="col-logo">
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <img width="60px" src="{{asset("storage/$brand->image")}}" alt="{{$brand->name}}">
+                                            <img width="60px" src="{{asset("storage/$cat->image")}}" alt="{{$cat->name}}">
                                         </div>
                                     </td>
-                                    <td class="col-name fw-bold">{{$brand->name}}</td>
-                                    <td class="col-slug">{{$brand->slug}}</td>
-                                    <td class="col-products"><a href="#" target="_blank">0</a></td>
+                                    <td class="col-name fw-bold">{{$cat->name}}</td>
+                                    <td class="col-slug">{{$cat->slug}}</td>
+                                    <td><a href="#" target="_blank"></a>0</td>
                                     <td class="col-action">
                                         <div class="list-icon-function">
-                                            <a href="{{route('admin.brand.edit', $brand->id)}}">
+                                            <a href="">
                                                 <div class="item edit ps-5">
                                                     <i class="icon-edit-3"></i>
                                                 </div>
                                             </a>
-                                            <form action="{{route("admin.brand.delete", $brand->id)}}" method="POST">
+                                            <form action="{{route('admin.categories.delete', $cat->id)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="item text-danger delete border-0" type="submit">
@@ -87,7 +87,7 @@
             </div>
             <div class="divider mb-5"></div>
             <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
-                {{$brands->links('pagination::bootstrap-5')}}
+                {{$categories->links('pagination::bootstrap-5')}}
             </div>
         </div>
     </div>
