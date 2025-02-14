@@ -32,70 +32,78 @@
                         </div>
                     </form>
                 </div>
-                <a class="tf-button style-1 w208" href="add-product.html"><i
+                <a class="tf-button style-1 w208" href="{{route('admin.product.add')}}"><i
                         class="icon-plus"></i>Add new</a>
             </div>
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>SalePrice</th>
-                            <th>SKU</th>
-                            <th>Category</th>
-                            <th>Brand</th>
-                            <th>Featured</th>
-                            <th>Stock</th>
-                            <th>Quantity</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
+            <div class="wg-table table-all-user">
+                <div class="table-responsive">
+                    @if(Session::has("success"))
+                        <p class="alert alert-success">{{session::get('success')}}</p>
+                    @endif
+                    <table class="table table-striped table-bordered">
+                        <thead>
                             <tr>
-                                <td>{{$product->id}}</td>
-                                <td class="pname">
-                                    <div class="image">
-                                        <img src={{asset("storage/$product->image")}} alt="{{$product->name}}" class="image">
-                                    </div>
-                                    <div class="name">
-                                        <a href="#" class="body-title-2">{{$product->name}}</a>
-                                        <div class="text-tiny mt-3">{{$product->slug}}</div>
-                                    </div>
-                                </td>
-                                <td>{{$product->regular_price}}</td>
-                                <td>{{$product->sale_price}}</td>
-                                <td>{{$product->SKU}}</td>
-                                <td>{{$product->category->name}}</td>
-                                <td>{{$product->brand->name}}</td>
-                                <td>{{$product->featured == 0 ? "No" : "Yes"}}</td>
-                                <td>{{$product->stock_status}}</td>
-                                <td>{{$product->quantity}}</td>
-                                <td>
-                                    <div class="list-icon-function">
-                                        <a href="#" target="_blank">
-                                            <div class="item eye">
-                                                <i class="icon-eye"></i>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="item edit">
-                                                <i class="icon-edit-3"></i>
-                                            </div>
-                                        </a>
-                                        <form action="#" method="POST">
-                                            <div class="item text-danger delete">
-                                                <i class="icon-trash-2"></i>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </td>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>image</th>
+                                <th>Price</th>
+                                <th>SalePrice</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Featured</th>
+                                <th>Stock</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($products as $product)
+                                <tr>
+                                    <td>{{$product->id}}</td>
+                                    <td class="">
+                                        <div class="name">
+                                            <a href="#" class="body-title-2">{{$product->name}}</a>
+                                            <div class="text-tiny mt-3">{{$product->slug}}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <img width="80px" src={{asset("storage/$product->image")}} alt="{{$product->name}}">
+                                        </div>
+                                    </td>
+                                    <td>${{$product->regular_price}}</td>
+                                    <td>${{$product->sale_price}}</td>
+                                    <td>{{$product->SKU}}</td>
+                                    <td>{{$product->category->name}}</td>
+                                    <td>{{$product->brand->name}}</td>
+                                    <td>{{$product->Featured == 0 ? "No" : "Yes"}}</td>
+                                    <td>{{$product->stock_status}}</td>
+                                    <td>{{$product->Quantity}}</td>
+                                    <td>
+                                        <div class="list-icon-function">
+                                            <a href="#" target="_blank">
+                                                <div class="item eye">
+                                                    <i class="icon-eye"></i>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="item edit">
+                                                    <i class="icon-edit-3"></i>
+                                                </div>
+                                            </a>
+                                            <form action="#" method="POST">
+                                                <div class="item text-danger delete">
+                                                    <i class="icon-trash-2"></i>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="divider"></div>
@@ -105,4 +113,18 @@
         </div>
     </div>
 </div>
+
+<style>
+    .wg-table table {
+        width: 100%;
+        table-layout: fixed; 
+        border-collapse: collapse;
+    }
+    .wg-table th, .wg-table td {
+        padding: 10px;
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
+
 @endsection

@@ -124,4 +124,40 @@ class AdminController extends Controller
         $products = Product::orderBy("created_at", "DESC")->paginate(10);
         return view("admin.products", compact("products"));
     }
+
+    public function add_product() {
+        $categories = Category::select("id", "name")->orderBy("name")->get();
+        $brands = Brand::select("id", "name")->orderBy("name")->get();
+        return view("admin.product-add", compact("categories", "brands"));
+    }
+
+    public function store_product(Request $request) {
+        $data = $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:products,slug',
+            'short_description' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required',
+            'sale_price' => 'required',
+            'SKU' => 'required',
+            'stock_status' => 'required',
+            'featured' => 'required',
+            'quantity' => 'required',
+            'image' => 'required|mimes:png,jpeg,jpg',
+            'images.*' => 'mimes:png,jpeg,jpg',
+            'category_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+        $data["image"] = Storage::putFile("products", $request->image);
+        $images = [];
+        if($request->hasFile("images")) {
+            foreach($request->file("images") as $image) {
+                $images[] = Storage::putFile("products", $image);
+            }
+        }
+        $data["images"] = json_encode($images);
+        Product::create($data);
+        session()->flash("success", "product has been added successfully!");
+        return redirect(route("admin.products"));
+    }
 }
