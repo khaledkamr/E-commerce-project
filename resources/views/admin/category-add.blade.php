@@ -15,7 +15,7 @@
                     <i class="icon-chevron-right"></i>
                 </li>
                 <li>
-                    <a href="{{route("admin.categories")}}">
+                    <a href="{{route('admin.categories')}}">
                         <div class="text-tiny">Categories</div>
                     </a>
                 </li>

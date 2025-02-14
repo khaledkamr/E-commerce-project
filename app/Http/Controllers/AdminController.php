@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -115,5 +116,12 @@ class AdminController extends Controller
         $category->update($data);
         session()->flash("success", "Category updated successfully");
         return redirect(route("admin.categories"));
+    }
+
+    //--------------------------------------------------------------------------
+
+    public function products() {
+        $products = Product::orderBy("created_at", "DESC")->paginate(10);
+        return view("admin.products", compact("products"));
     }
 }
