@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 
 class AdminController extends Controller
 {
@@ -162,6 +163,15 @@ class AdminController extends Controller
         return redirect(route("admin.products"));
     }
 
+    Public function delete_product($id) {
+        $product = Product::findOrFail($id);
+        $product_name = $product->name;
+        Storage::delete($product->image);
+        $product->delete();
+        session()->flash("success", "$product_name category has been deleted successfully");
+        return redirect(route("admin.products"));
+    }
+
     public function edit_product($id) {
         $product = Product::findOrFail($id);
         $categories = Category::select("id", "name")->orderBy("name")->get();
@@ -182,7 +192,6 @@ class AdminController extends Controller
             'featured' => 'required',
             'quantity' => 'required|integer',
             'image' => 'mimes:png,jpeg,jpg',
-            'images.*' => 'image|mimes:png,jpeg,jpg',
             'category_id' => 'required',
             'brand_id' => 'required'
         ]);

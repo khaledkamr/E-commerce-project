@@ -33,9 +33,10 @@ Route::middleware((["auth", AuthAdmin::class]))->group(function() {
     Route::get("/admin/categories/edit/{id}", [AdminController::class, "edit_category"])->name("admin.categories.edit");
     Route::put("/admin/categories/update/{id}", [AdminController::class, "update_category"])->name("admin.categories.update");
 
-    Route::get("admin/products", [AdminController::class, "products"])->name("admin.products");
-    Route::get("admin/product/add", [AdminController::class, "add_product"])->name("admin.product.add");
-    Route::post("admin/product/store", [AdminController::class, "store_product"])->name("admin.product.store");
-    Route::get("admin/product/edit/{id}", [AdminController::class, "edit_product"])->name("admin.product.edit");
-    Route::put("admin/product/update/{id}", [AdminController::class, "update_product"])->name("admin.product.update");
+    Route::get("/admin/products", [AdminController::class, "products"])->name("admin.products");
+    Route::get("/admin/product/add", [AdminController::class, "add_product"])->name("admin.product.add");
+    Route::post("/admin/product/store", [AdminController::class, "store_product"])->name("admin.product.store");
+    Route::delete("/admin/product/{id}", [AdminController::class, "delete_product"])->name("admin.product.delete");
+    Route::get("/admin/product/edit/{id}", [AdminController::class, "edit_product"])->name("admin.product.edit");
+    Route::put("/admin/product/update/{id}", [AdminController::class, "update_product"])->name("admin.product.update");
 });
