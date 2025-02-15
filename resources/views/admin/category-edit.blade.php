@@ -4,7 +4,7 @@
     <!-- main-content-wrap -->
     <div class="main-content-wrap">
         <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-            <h3>Category infomation</h3>
+            <h3>Update Category</h3>
             <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
                 <li>
                     <a href="{{route('admin.index')}}">
@@ -23,7 +23,7 @@
                     <i class="icon-chevron-right"></i>
                 </li>
                 <li>
-                    <div class="text-tiny">New Category</div>
+                    <div class="text-tiny">Edit Category</div>
                 </li>
             </ul>
         </div>
@@ -81,7 +81,7 @@
                 @enderror
                 <div class="bot">
                     <div></div>
-                    <button class="tf-button w208" type="submit">Save</button>
+                    <button class="tf-button w208" type="submit">Update</button>
                 </div>
             </form>
         </div>

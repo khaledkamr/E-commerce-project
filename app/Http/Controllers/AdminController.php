@@ -142,9 +142,9 @@ class AdminController extends Controller
             'SKU' => 'required',
             'stock_status' => 'required',
             'featured' => 'required',
-            'quantity' => 'required',
+            'quantity' => 'required|integer',
             'image' => 'required|mimes:png,jpeg,jpg',
-            'images.*' => 'mimes:png,jpeg,jpg',
+            'images.*' => 'image|mimes:png,jpeg,jpg',
             'category_id' => 'required',
             'brand_id' => 'required'
         ]);
@@ -155,9 +155,44 @@ class AdminController extends Controller
                 $images[] = Storage::putFile("products", $image);
             }
         }
-        $data["images"] = json_encode($images);
+        $data["images"] = implode(",", $images);
+        // dd($data["images"]);
         Product::create($data);
-        session()->flash("success", "product has been added successfully!");
+        session()->flash("success", "$request->name has been added successfully!");
+        return redirect(route("admin.products"));
+    }
+
+    public function edit_product($id) {
+        $product = Product::findOrFail($id);
+        $categories = Category::select("id", "name")->orderBy("name")->get();
+        $brands = Brand::select("id", "name")->orderBy("name")->get();
+        return view("admin.product-edit", compact("product", "categories", "brands"));
+    }
+
+    public function update_product($id, Request $request) {
+        $data = $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:products,slug',
+            'short_description' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required',
+            'sale_price' => 'required',
+            'SKU' => 'required',
+            'stock_status' => 'required',
+            'featured' => 'required',
+            'quantity' => 'required|integer',
+            'image' => 'mimes:png,jpeg,jpg',
+            'images.*' => 'image|mimes:png,jpeg,jpg',
+            'category_id' => 'required',
+            'brand_id' => 'required'
+        ]);
+        $product = Product::findOrFail($id);
+        if($request->has("image")) {
+            Storage::delete($product->image);
+            $date["image"] = Storage::putFile("products", $request->image);
+        }
+        $product->update($data);
+        session()->flash("success", "Product updated successfully");
         return redirect(route("admin.products"));
     }
 }
