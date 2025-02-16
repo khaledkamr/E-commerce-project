@@ -154,3 +154,25 @@
 </style>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(function() {
+            $('.delete').on('click', function(e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to delete this record",
+                    type: "warning",
+                    buttons: ["no", "yes"],
+                    confirmButtonColor: "#dc3545"
+                }).then(function(result) {
+                    if(result) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

@@ -34,8 +34,7 @@
                 @method("PUT")
                 <fieldset class="name">
                     <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Brand name" name="name"
-                        tabindex="0" value="{{$brand->name}}" aria-required="true" required="">
+                    <input class="flex-grow" type="text" placeholder="Brand name" name="name" tabindex="0" value="{{$brand->name}}" aria-required="true">
                 </fieldset>
                 @error('name') 
                     <span class="alert alert-danger text-center">
@@ -44,8 +43,7 @@
                 @enderror
                 <fieldset class="name">
                     <div class="body-title">Brand Slug <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Brand Slug" name="slug"
-                        tabindex="0" value="{{$brand->slug}}" aria-required="true" required="">
+                    <input class="flex-grow" type="text" placeholder="Brand Slug" name="slug" tabindex="0" value="{{$brand->slug}}" aria-required="true">
                 </fieldset>
                 @error('slug') 
                     <span class="alert alert-danger text-center">
@@ -64,8 +62,7 @@
                                 <span class="icon">
                                     <i class="icon-upload-cloud"></i>
                                 </span>
-                                <span class="body-text">Drop your images here or select <span
-                                        class="tf-color">click to browse</span></span>
+                                <span class="body-text">Drop your images here or select <span class="tf-color">click to browse</span></span>
                                 <input type="file" id="myFile" name="image" accept="image/*">
                             </label>
                         </div>
