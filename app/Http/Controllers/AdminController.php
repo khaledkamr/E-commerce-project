@@ -53,7 +53,7 @@ class AdminController extends Controller
     public function update_brand($id, Request $request) {
         $data = $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:brands,slug',
+            'slug' => 'required|unique:brands,slug,' . $id,
             'image' => 'mimes:png,jpeg,jpg|image'
         ]);
         $brand = Brand::findOrFail($id);
@@ -106,7 +106,7 @@ class AdminController extends Controller
     public function update_category($id, Request $request) {
         $data = $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:categories,slug',
+            'slug' => 'required|unique:categories,slug,' . $id,
             'image' => 'mimes:png,jpeg,jpg|image'
         ]);
         $category = Category::findOrFail($id);
@@ -182,7 +182,7 @@ class AdminController extends Controller
     public function update_product($id, Request $request) {
         $data = $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:products,slug',
+            'slug' => 'required|unique:products,slug,' . $id,
             'short_description' => 'required',
             'description' => 'required',
             'regular_price' => 'required',
