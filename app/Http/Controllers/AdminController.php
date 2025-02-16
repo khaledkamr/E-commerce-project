@@ -112,7 +112,7 @@ class AdminController extends Controller
         $category = Category::findOrFail($id);
         if($request->has("image")) {
             Storage::delete($category->image);
-            $date["image"] = Storage::putFile("categories", $request->image);
+            $data["image"] = Storage::putFile("categories", $request->image);
         }
         $category->update($data);
         session()->flash("success", "Category updated successfully");
@@ -198,7 +198,7 @@ class AdminController extends Controller
         $product = Product::findOrFail($id);
         if($request->has("image")) {
             Storage::delete($product->image);
-            $date["image"] = Storage::putFile("products", $request->image);
+            $data["image"] = Storage::putFile("products", $request->image);
         }
         $product->update($data);
         session()->flash("success", "Product updated successfully");
