@@ -18,8 +18,13 @@ class Product extends Model
         'featured',
         'quantity' ,
         'image' ,
+        'images',
         'category_id',
         'brand_id'
+    ];
+
+    protected $casts = [
+        "images" => "array" // ✅ Cast images to an array for proper JSON storage
     ];
 
     public function category() {

@@ -134,12 +134,9 @@
                     <div class="body-title mb-10">Upload Gallery Images</div>
                     <div class="upload-image mb-16">
                         @if($product->images)
-                            @php
-                                $images = json_decode($product->images, true);
-                            @endphp
-                            @foreach ($images as $image)
+                            @foreach (json_decode($product->images, true) as $image)
                                 <div class="item">
-                                    <img src="{{asset("storage/$image")}}"alt="{{$product->name}}">
+                                    <img src="{{asset("storage/$image")}}"alt="Product Image">
                                 </div>        
                             @endforeach
                         @endif                                        

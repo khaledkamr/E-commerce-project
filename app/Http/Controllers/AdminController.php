@@ -30,7 +30,7 @@ class AdminController extends Controller
             'slug' => 'required|unique:brands,slug',
             'image' => 'mimes:png,jpeg,jpg|image'
         ]);
-        $data["image"] = Storage::putFile("brands", $request->image);
+        $data["image"] = Storage::putFile("brands", $request->file("image"));
         Brand::create($data);
         session()->flash("success", "brand has been added successfully!");
         return redirect(route("admin.brands"));
@@ -57,9 +57,9 @@ class AdminController extends Controller
             'image' => 'mimes:png,jpeg,jpg|image'
         ]);
         $brand = Brand::findOrFail($id);
-        if($request->has("image")) {
+        if($request->hasFile("image")) {
             Storage::delete($brand->image);
-            $data["image"] = Storage::putFile("brands", $request->image);
+            $data["image"] = Storage::putFile("brands", $request->file("image"));
         }
         $brand->update($data);
         session()->flash("success", "brand updated successfully");
@@ -83,7 +83,7 @@ class AdminController extends Controller
             'slug' => 'required|unique:categories,slug',
             'image' => 'mimes:png,jpeg,jpg|image'
         ]);
-        $data["image"] = Storage::putFile("categories", $request->image);
+        $data["image"] = Storage::putFile("categories", $request->file("image"));
         Category::create($data);
         session()->flash("success", "Category has been added successfully!");
         return redirect(route("admin.categories"));
@@ -110,9 +110,9 @@ class AdminController extends Controller
             'image' => 'mimes:png,jpeg,jpg|image'
         ]);
         $category = Category::findOrFail($id);
-        if($request->has("image")) {
+        if($request->hasFile("image")) {
             Storage::delete($category->image);
-            $data["image"] = Storage::putFile("categories", $request->image);
+            $data["image"] = Storage::putFile("categories", $request->file("image"));
         }
         $category->update($data);
         session()->flash("success", "Category updated successfully");
@@ -149,15 +149,14 @@ class AdminController extends Controller
             'category_id' => 'required',
             'brand_id' => 'required'
         ]);
-        $data["image"] = Storage::putFile("products", $request->image);
+        $data["image"] = Storage::putFile("products", $request->file("image"));
         $images = [];
         if($request->hasFile("images")) {
             foreach($request->file("images") as $image) {
                 $images[] = Storage::putFile("products", $image);
             }
         }
-        $data["images"] = implode(",", $images);
-        // dd($data["images"]);
+        $data["images"] = json_encode($images);
         Product::create($data);
         session()->flash("success", "$request->name has been added successfully!");
         return redirect(route("admin.products"));
@@ -192,14 +191,25 @@ class AdminController extends Controller
             'featured' => 'required',
             'quantity' => 'required|integer',
             'image' => 'mimes:png,jpeg,jpg',
+            'images.*' => 'image|mimes:png,jpeg,jpg',
             'category_id' => 'required',
             'brand_id' => 'required'
         ]);
         $product = Product::findOrFail($id);
-        if($request->has("image")) {
+        if($request->hasFile("image")) {
             Storage::delete($product->image);
-            $data["image"] = Storage::putFile("products", $request->image);
+            $data["image"] = Storage::putFile("products", $request->file("image"));
         }
+        $images = [];
+        if($request->hasFile("images")) {
+            foreach(json_decode($product->images, true) as $image) {
+                Storage::delete($image);
+            }
+            foreach($request->file("images") as $image) {
+                $images[] = Storage::putFile("products", $image);
+            }
+        }
+        $data["images"] = json_encode($images);
         $product->update($data);
         session()->flash("success", "Product updated successfully");
         return redirect(route("admin.products"));
