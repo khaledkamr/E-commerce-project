@@ -61,7 +61,7 @@
                             @foreach($products as $product)
                                 <tr>
                                     <td>{{$product->id}}</td>
-                                    <td class="">
+                                    <td>
                                         <div class="name">
                                             <a href="#" class="body-title-2">{{$product->name}}</a>
                                             <div class="text-tiny mt-3">{{$product->slug}}</div>

@@ -24,7 +24,7 @@ class Product extends Model
     ];
 
     protected $casts = [
-        "images" => "array" // ✅ Cast images to an array for proper JSON storage
+        "images" => "array" // Cast images to an array for proper JSON storage
     ];
 
     public function category() {

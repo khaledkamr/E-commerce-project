@@ -62,7 +62,7 @@
                                     </td>
                                     <td class="col-name fw-bold">{{$cat->name}}</td>
                                     <td class="col-slug">{{$cat->slug}}</td>
-                                    <td><a href="#" target="_blank"></a>0</td>
+                                    <td><a href="#" target="_blank"></a>{{$cat->products_count}}</td>
                                     <td class="col-action">
                                         <div class="list-icon-function">
                                             <a href="{{route("admin.categories.edit", $cat->id)}}">

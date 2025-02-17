@@ -62,7 +62,7 @@
                                     </td>
                                     <td class="col-name fw-bold">{{$brand->name}}</td>
                                     <td class="col-slug">{{$brand->slug}}</td>
-                                    <td class="col-products"><a href="#" target="_blank">0</a></td>
+                                    <td class="col-products"><a href="#" target="_blank">{{$brand->products_count}}</a></td>
                                     <td class="col-action">
                                         <div class="list-icon-function">
                                             <a href="{{route('admin.brand.edit', $brand->id)}}">
