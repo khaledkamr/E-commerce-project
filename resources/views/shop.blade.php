@@ -368,14 +368,14 @@
                             <div class="swiper-container background-img js-swiper-slider" data-settings='{"resizeObserver": true}'>
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <a href="details.html">
+                                        <a href="{{route('shop.product.details', $product->slug)}}">
                                             <img loading="lazy" src="{{asset("storage/$product->image")}}" width="330" height="400" alt="{{$product->image}}" class="pc__img">
                                         </a>
                                     </div>
                                     @if(!empty($product->images))
                                         @foreach (json_decode($product->images, true) as $image)
                                             <div class="swiper-slide">
-                                                <a href="details.html">
+                                                <a href="{{route('shop.product.details', $product->slug)}}">
                                                     <img loading="lazy" src="{{asset("storage/$image")}}" width="330" height="400" alt="{{$image}}" class="pc__img">
                                                 </a>
                                             </div>
@@ -399,7 +399,7 @@
 
                         <div class="pc__info position-relative">
                             <p class="pc__category">{{$product->category->name}}</p>
-                            <h6 class="pc__title"><a href="details.html">{{$product->name}}</a></h6>
+                            <h6 class="pc__title"><a href="{{route('shop.product.details', $product->slug)}}">{{$product->name}}</a></h6>
                             <div class="product-card__price d-flex">
                                 <span class="money price">
                                     @if($product->sale_price)
