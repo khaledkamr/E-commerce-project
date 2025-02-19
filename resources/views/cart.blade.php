@@ -1,4 +1,14 @@
 @extends("layouts.app")
+
+@push('styles')
+<style>
+    .coupon::placeholder {
+        color: gray !important; 
+        opacity: 1;
+    }
+</style>
+@endpush
+
 @section("content")
 <main class="pt-90">
     <div class="mb-4 pb-4"></div>
@@ -6,21 +16,21 @@
       <h2 class="page-title">Cart</h2>
       <div class="checkout-steps">
         <a href="javascript:void(0)" class="checkout-steps__item active">
-          <span class="checkout-steps__item-number">01</span>
+          <span class="checkout-steps__item-number">1</span>
           <span class="checkout-steps__item-title">
             <span>Shopping Bag</span>
             <em>Manage Your Items List</em>
           </span>
         </a>
         <a href="javascript:void(0)" class="checkout-steps__item">
-          <span class="checkout-steps__item-number">02</span>
+          <span class="checkout-steps__item-number">2</span>
           <span class="checkout-steps__item-title">
             <span>Shipping and Checkout</span>
             <em>Checkout Your Items List</em>
           </span>
         </a>
         <a href="javascript:void(0)" class="checkout-steps__item">
-          <span class="checkout-steps__item-number">03</span>
+          <span class="checkout-steps__item-number">3</span>
           <span class="checkout-steps__item-title">
             <span>Confirmation</span>
             <em>Review And Submit Your Order</em>
@@ -99,14 +109,13 @@
             </table>
             <div class="cart-table-footer">
                 <form action="#" class="position-relative bg-body">
-                <input class="form-control" type="text" name="coupon_code" placeholder="Coupon Code">
-                <input class="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4" type="submit"
-                    value="APPLY COUPON">
+                <input class="form-control coupon" type="text" name="coupon_code" placeholder="Coupon Code">
+                <input class="btn-link fw-medium position-absolute top-0 end-0 h-100 px-4" type="submit" value="APPLY COUPON">
                 </form>
                 <form action="{{route('cart.clear')}}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-light" type="submit">CLEAR CART</button>
+                    <button class="btn btn-danger" type="submit">CLEAR CART</button>
                 </form>
             </div>
             </div>
