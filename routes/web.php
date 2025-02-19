@@ -14,18 +14,18 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-Route::controller(ShopController::class)->group(function() {
-    Route::get("/shop", 'index')->name('shop.index');
-    Route::get("/shop/{product_slug}", 'product_details')->name('shop.product.details');
+Route::prefix('shop')->as('shop.')->controller(ShopController::class)->group(function() {
+    Route::get("/", 'index')->name('index');
+    Route::get("/{product_slug}", 'product_details')->name('product.details');
 });
 
-Route::controller(CartController::class)->group(function() {
-    Route::get('/cart', 'index')->name('cart.index');
-    Route::post('/cart/add', 'add_to_cart')->name('cart.add');
-    Route::put('/cart/increase-quantity/{rowId}', 'increase_cart_quantity')->name('cart.qty.increase');
-    Route::put('/cart/decrease-quantity/{rowId}', 'decrease_cart_quantity')->name('cart.qty.decrease');
-    Route::delete('/cart/remove/{rowId}', 'remove_item')->name('cart.remove');
-    Route::delete('/cart/clear', 'empty_cart')->name('cart.clear');
+Route::prefix('cart')->as('cart.')->controller(CartController::class)->group(function() {
+    Route::get('/', 'index')->name('index');
+    Route::post('/add', 'add_to_cart')->name('add');
+    Route::put('/increase-quantity/{rowId}', 'increase_cart_quantity')->name('qty.increase');
+    Route::put('/decrease-quantity/{rowId}', 'decrease_cart_quantity')->name('qty.decrease');
+    Route::delete('/remove/{rowId}', 'remove_item')->name('remove');
+    Route::delete('/clear', 'empty_cart')->name('clear');
 });
 
 Route::middleware((["auth"]))->group(function() {
