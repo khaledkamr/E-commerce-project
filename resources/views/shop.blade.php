@@ -435,23 +435,27 @@
 @push('scripts')
   <script>
     $(function() {
+      let debounceTimer;
+
       $("#orderby").on("change", function() {
         $("#order").val($("#orderby option:selected").val());
         $("#frmfilter").submit();
       });
 
       $("input[name='brands']").on("change", function() {
-        var brands = "";
-        $("input[name='brands']:checked").each(function() {
-          if(brands == "") {
-            brands += $(this).val();
-          }
-          else {
-            brands += "," + $(this).val();
-          }
-        });
-        $("#hdnBrands").val(brands);
-        $("#frmfilter").submit();
+        clearTimeout(debounceTimer); // Clear the previous timer
+        debounceTimer = setTimeout(function() {
+          var brands = "";
+          $("input[name='brands']:checked").each(function() {
+            if(brands == "") {
+              brands += $(this).val();
+            } else {
+              brands += "," + $(this).val();
+            }
+          });
+          $("#hdnBrands").val(brands);
+          $("#frmfilter").submit();
+        }, 1000); // 300ms delay before submitting the form
       });
     });
   </script>
