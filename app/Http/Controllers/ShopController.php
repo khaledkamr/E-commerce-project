@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
@@ -12,6 +13,7 @@ class ShopController extends Controller
         $column = "";
         $orderBy = "";
         $order = $request->query('order') ? $request->query('order') : -1;
+        $f_brands = $request->query('brands');
         switch($order) {
             case 1:
                 $column = "created_at";
@@ -33,8 +35,11 @@ class ShopController extends Controller
                 $column = "id";
                 $orderBy = "DESC";
         }
-        $products = Product::orderBy($column, $orderBy)->paginate(12);
-        return view('shop', compact('products', 'order'));
+        $products = Product::where(function($query) use($f_brands) {
+            $query->whereIn('brand_id', explode(',', $f_brands))->orWhereRaw("'".$f_brands."'=''");
+        })->orderBy($column, $orderBy)->paginate(12);
+        $brands = Brand::orderBy("name", "ASC")->get();
+        return view('shop', compact('products', 'order', 'brands', 'f_brands'));
     }
 
     public function product_details($product_slug) {
