@@ -16,6 +16,8 @@ class ShopController extends Controller
         $order = $request->query('order') ? $request->query('order') : -1;
         $f_brands = $request->query('brands');
         $f_cats = $request->query('categories');
+        $min_price = $request->query('min') ? $request->query('min') : 1;
+        $max_price = $request->query('max') ? $request->query('max') : 500;
         switch($order) {
             case 1:
                 $column = "created_at";
@@ -41,10 +43,12 @@ class ShopController extends Controller
             $query->whereIn('brand_id', explode(',', $f_brands))->orWhereRaw("'".$f_brands."'=''");
         })->where(function($query) use($f_cats) {
             $query->whereIn('category_id', explode(',', $f_cats))->orWhereRaw("'".$f_cats."'=''");
+        })->where(function($query) use($min_price, $max_price) {
+            $query->whereBetween('regular_price', [$min_price, $max_price])->orWhereBetween('sale_price', [$min_price, $max_price]);
         })->orderBy($column, $orderBy)->paginate(12);
         $brands = Brand::orderBy("name", "ASC")->get();
         $categories = Category::orderBy("name", "ASC")->get();
-        return view('shop', compact('products', 'order', 'brands', 'f_brands', 'categories', 'f_cats'));
+        return view('shop', compact('products', 'order', 'brands', 'f_brands', 'categories', 'f_cats', 'min_price', 'max_price'));
     }
 
     public function product_details($product_slug) {
