@@ -32,6 +32,8 @@ Route::prefix('cart')->as('cart.')->controller(CartController::class)->group(fun
 Route::prefix('wishlist')->as('wishlist.')->controller(WishlistController::class)->group(function() {
     Route::get('/', 'index')->name('index');
     Route::post('/add', 'add_to_wishlist')->name('add');
+    Route::delete('/item/remove/{rowId}', 'remove_item')->name('item.remove');
+    Route::delete('/clear', 'empty_wishlist')->name('items.clear');
 });
 
 Route::middleware((["auth"]))->group(function() {
