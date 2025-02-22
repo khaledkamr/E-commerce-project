@@ -31,36 +31,39 @@
                         </div>
                     </form>
                 </div>
-                <a class="tf-button style-1 w208" href="add-coupon.html">
+                <a class="tf-button style-1 w208" href="{{route('admin.coupons.add')}}">
                     <i class="icon-plus"></i>
                     Add new
                 </a>
             </div>
             <div class="wg-table table-all-user">
                 <div class="table-responsive">
+                    @if(Session::has('success'))
+                        <p class="alert alert-success">{{Session::get('success')}}</p>
+                    @endif
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Code</th>
-                                <th>Type</th>
-                                <th>Value</th>
-                                <th>Cart Value</th>
-                                <th>Expiry Date</th>
-                                <th>Action</th>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Code</th>
+                                <th class="text-center">Type</th>
+                                <th class="text-center">Value</th>
+                                <th class="text-center">Cart Value</th>
+                                <th class="text-center">Expiry Date</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($coupons as $coupon)
                                 <tr>
-                                    <td>{{$coupon->id}}</td>
-                                    <td>{{$coupon->code}}</td>
-                                    <td>{{$coupon->type}}</td>
-                                    <td>{{$coupon->value}}</td>
-                                    <td>${{$coupon->cart_value}}</td>
-                                    <td>{{$coupon->expiry_date}}</td>
-                                    <td>
-                                        <div class="list-icon-function">
+                                    <td class="text-center">{{$coupon->id}}</td>
+                                    <td class="text-center">{{$coupon->code}}</td>
+                                    <td class="text-center">{{$coupon->type}}</td>
+                                    <td class="text-center">{{$coupon->value}}</td>
+                                    <td class="text-center">${{$coupon->cart_value}}</td>
+                                    <td class="text-center">{{$coupon->expiry_date}}</td>
+                                    <td class="text-center">
+                                        <div class="list-icon-function d-flex justify-content-center">
                                             <a href="#">
                                                 <div class="item edit">
                                                     <i class="icon-edit-3"></i>
@@ -75,7 +78,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -87,4 +89,17 @@
         </div>
     </div>
 </div>
+
+<style>
+    .table th, .table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .list-icon-function {
+        display: flex;
+        justify-content: center;
+        gap: 30px; 
+    }
+</style>
 @endsection

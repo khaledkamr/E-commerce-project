@@ -222,4 +222,22 @@ class AdminController extends Controller
         $coupons = Coupon::orderBy('expiry_date', 'DESC')->paginate(12);
         return view('admin.coupons', compact('coupons'));
     }
+
+    public function add_coupon() {
+        return view('admin.coupon-add');
+    }
+
+    public function store_coupon(Request $request) {
+        $data = $request->validate([
+            'code' => 'required',
+            'type' => 'required',
+            'value' => 'required|numeric',
+            'cart_value' => 'required|numeric',
+            'expiry_date' => 'required|date'
+        ]);
+        $code = $data['code'];
+        Coupon::create($data);
+        session()->flash('success', "$code coupon added successfully");
+        return redirect(route('admin.coupons'));
+    }
 }
