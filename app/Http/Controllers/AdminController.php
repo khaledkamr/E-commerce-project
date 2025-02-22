@@ -219,7 +219,7 @@ class AdminController extends Controller
     //--------------------------------------------------------------------------
 
     public function coupons() {
-        $coupons = Coupon::orderBy('expiry_date', 'DESC')->paginate(12);
+        $coupons = Coupon::orderBy('id', 'DESC')->paginate(12);
         return view('admin.coupons', compact('coupons'));
     }
 
@@ -238,6 +238,14 @@ class AdminController extends Controller
         $code = $data['code'];
         Coupon::create($data);
         session()->flash('success', "$code coupon added successfully");
+        return redirect(route('admin.coupons'));
+    }
+
+    public function delete_coupon($id) {
+        $coupon = Coupon::findOrFail($id);
+        $code = $coupon->code;
+        $coupon->delete();
+        session()->flash('success', "$code coupon deleted successfully!");
         return redirect(route('admin.coupons'));
     }
 }

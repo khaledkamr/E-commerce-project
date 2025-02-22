@@ -72,4 +72,5 @@ Route::middleware((["auth", AuthAdmin::class]))->prefix("admin")->as("admin.")->
     Route::get('/coupons', 'coupons')->name('coupons');
     Route::get('/coupons/add', 'add_coupon')->name('coupons.add');
     Route::post('/coupons/store', 'store_coupon')->name('coupons.store');
+    Route::delete('/coupons/{id}', 'delete_coupon')->name('coupon.delete');
 });
