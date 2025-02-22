@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -213,5 +214,12 @@ class AdminController extends Controller
         $product->update($data);
         session()->flash("success", "Product updated successfully");
         return redirect(route("admin.products"));
+    }
+
+    //--------------------------------------------------------------------------
+
+    public function coupons() {
+        $coupons = Coupon::orderBy('expiry_date', 'DESC')->paginate(12);
+        return view('admin.coupons', compact('coupons'));
     }
 }
