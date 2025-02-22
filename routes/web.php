@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::prefix('cart')->as('cart.')->controller(CartController::class)->group(fun
     Route::delete('/remove/{rowId}', 'remove_item')->name('remove');
     Route::delete('/clear', 'empty_cart')->name('clear');
 });
+
+Route::post('/wishlist/add', [WishlistController::class, 'add_to_wishlist'])->name('wishlist.add');
 
 Route::middleware((["auth"]))->group(function() {
     Route::get("/account-dashboard", [UserController::class, "index"])->name("user.index");
