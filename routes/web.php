@@ -29,7 +29,10 @@ Route::prefix('cart')->as('cart.')->controller(CartController::class)->group(fun
     Route::delete('/clear', 'empty_cart')->name('clear');
 });
 
-Route::post('/wishlist/add', [WishlistController::class, 'add_to_wishlist'])->name('wishlist.add');
+Route::prefix('wishlist')->as('wishlist.')->controller(WishlistController::class)->group(function() {
+    Route::get('/', 'index')->name('index');
+    Route::post('/add', 'add_to_wishlist')->name('add');
+});
 
 Route::middleware((["auth"]))->group(function() {
     Route::get("/account-dashboard", [UserController::class, "index"])->name("user.index");
