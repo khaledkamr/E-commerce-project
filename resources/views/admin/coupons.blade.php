@@ -64,7 +64,7 @@
                                     <td class="text-center">{{$coupon->expiry_date}}</td>
                                     <td class="text-center">
                                         <div class="list-icon-function d-flex justify-content-center">
-                                            <a href="#">
+                                            <a href="{{route('admin.coupon.edit', $coupon->id)}}">
                                                 <div class="item edit">
                                                     <i class="icon-edit-3"></i>
                                                 </div>
